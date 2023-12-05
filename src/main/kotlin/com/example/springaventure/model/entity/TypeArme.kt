@@ -37,7 +37,8 @@ class TypeArme constructor(
 
     // Liste des armes associées à ce type d'arme
     @OneToMany(mappedBy = "typeArme", cascade = [CascadeType.REMOVE], orphanRemoval = true)
-    var armes: MutableList<Arme> = mutableListOf()
+    var armes: MutableList<Arme> = mutableListOf(),
+
 ) {
-    // Vous pouvez ajouter d'autres méthodes ou propriétés au besoin
+// Vous pouvez ajouter d'autres méthodes ou propriétés au besoin
 }

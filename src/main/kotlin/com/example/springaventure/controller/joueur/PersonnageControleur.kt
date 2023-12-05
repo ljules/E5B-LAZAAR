@@ -1,6 +1,8 @@
 package com.example.springaventure.controller.joueur
 
+import com.example.springaventure.model.dao.ArmeDao
 import com.example.springaventure.model.dao.PersonnageDao
+import com.example.springaventure.model.dao.TypeArmeDao
 import com.example.springaventure.model.dao.UtilisateurDao
 import com.example.springaventure.model.entity.Personnage
 import org.springframework.security.core.Authentication
@@ -18,7 +20,8 @@ class PersonnageControleur(
     /** DAO pour l'accès aux données des personnages. */
     val personnageDao: PersonnageDao,
     /** DAO pour l'accès aux données des utilisateurs. */
-    val utilisateurDao: UtilisateurDao
+    val utilisateurDao: UtilisateurDao,
+    val armesDao: ArmeDao
 ) {
 
     /**
@@ -65,7 +68,9 @@ class PersonnageControleur(
     @GetMapping("/joueur/personnage/create")
     fun create(model: Model): String {
         val nouvellePersonnage = Personnage(null, "", 1, 1, 1, 1)
+        val armes = armesDao.findAll()
         model.addAttribute("nouvellePersonnage", nouvellePersonnage)
+        model.addAttribute("armes", armes)
         return "joueur/personnage/create"
     }
 

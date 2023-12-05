@@ -4,6 +4,8 @@ import com.example.springaventure.model.dao.PotionDao
 import org.springframework.stereotype.Controller
 import org.springframework.ui.Model
 import org.springframework.web.bind.annotation.GetMapping
+import org.springframework.web.bind.annotation.PathVariable
+
 /**
  * Contrôleur responsable de la gestion des potions dans la partie administrative de l'application.
  */
@@ -27,5 +29,24 @@ class PotionControleur(
         model.addAttribute("potions", potions)
         // Retourne le nom de la vue à afficher
         return "admin/potion/index"
+    }
+    /**
+     * Affiche les détails d'un potion en particulier.
+     *
+     * @param id L'identifiant unique de la potion à afficher.
+     * @param model Le modèle utilisé pour transmettre les données à la vue.
+     * @return Le nom de la vue à afficher.
+     * @throws NoSuchElementException si la qualité avec l'ID spécifié n'est pas trouvée.
+     */
+    @GetMapping("/admin/potion/{id}")
+    fun show(@PathVariable id: Long, model: Model): String {
+        // Récupère la potion avec l'ID spécifié depuis la base de données
+        val unePotion = this.potionDao.findById(id).orElseThrow()
+
+        // Ajoute la potion au modèle pour affichage dans la vue
+        model.addAttribute("potion", unePotion)
+
+        // Retourne le nom de la vue à afficher
+        return "admin/potion/show"
     }
 }
